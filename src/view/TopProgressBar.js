@@ -5,16 +5,18 @@ import Box from "@mui/material/Box";
 //const normalise =(value)=>((value-MIN)*100)/(MAX-MIN)};
 
 const TopProgressBar = (props) => {
-  // const [progress,setProgress] = useState(70);
-  const {currentQuestion}=props;
+  const { currentQuestion } = props;
 
   return (
-    <Box sx={{ border: 1, borderColor: "primary.main", borderRadius: "16px" }}>
+    <Box>
       <LinearProgress
-        color="secondary"
+        color="secondary" //color change
         variant="determinate"
-        sx={{ height: 20, borderRadius: "16px" }}
-        //value={normalise(props.value)}
+        sx={{
+          height: 15,
+          borderRadius: "16px",
+          bgcolor: "Background",
+        }}
         value={currentQuestion}
       ></LinearProgress>
     </Box>

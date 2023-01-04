@@ -7,9 +7,13 @@ import BottomProgressBar from "./view/BottomProgressBar";
 const App = () => {
   return (
     <div>
-      <TopProgressBar currentQuestion={25} />
+      <TopProgressBar currentQuestion={50} />
       <Typography variant="h1">Hello world</Typography>
-      <BottomProgressBar currentScore={75} />
+      <BottomProgressBar
+        currentScore={57}
+        scoreIfWrong={40}
+        scoreIfCorrect={90}
+      />
     </div>
   );
 };
