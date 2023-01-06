@@ -1,60 +1,50 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Box, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 
 const BottomProgressBar = (props) => {
   const { currentScore, scoreIfWrong, scoreIfCorrect } = props;
 
   return (
-    <>
+    <Box>
+      <Stack direction="row" justifyContent="space-between">
+        <Typography>{`Score: ${currentScore}%`} </Typography>
+        <Typography>{`Max Score: ${scoreIfCorrect}%`}</Typography>
+      </Stack>
       <Box
-        sx={{
-          position: "absolute",
-          bottom: "50px",
-          width: "98%",
+        style={{
+          width: "100%",
+          height: "30px",
+          border: "1px",
+          borderRadius: "10px",
+          borderStyle: "solid",
+          display: "flex",
+          overflow: "hidden",
         }}
       >
-        <Stack direction="row" justifyContent="space-between">
-          <p>{`Score: ${currentScore}%`} </p>
-          <p>{`Max Score: ${scoreIfCorrect}%`}</p>
-        </Stack>
-      </Box>
-
-      <Box
-        borderRadius="10px"
-        display="flex"
-        position="absolute"
-        bottom="10px"
-        border={1}
-        width="98%"
-      >
         <Box
-          display="flex"
-          height="5px"
-          width={`${scoreIfWrong}%`}
-          bgcolor="#212121"
-          p={2}
-          sx={{ borderRadius: "10px 0px 0px 10px" }}
-        ></Box>
-
-        <Box
-          display="flex"
-          height="5px"
-          left="blk"
-          width={`${currentScore - scoreIfWrong}%`}
-          bgcolor="#757575"
-          p={2}
+          style={{
+            width: `${scoreIfWrong}%`,
+            height: "30px",
+            backgroundColor: "#212121",
+          }}
         ></Box>
         <Box
-          display="flex"
-          height="5px"
-          left="gry"
-          width={`${scoreIfCorrect - currentScore}%`}
-          bgcolor="#e0e0e0"
-          p={2}
+          style={{
+            width: `${currentScore - scoreIfWrong}%`,
+            height: "30px",
+            backgroundColor: "#757575",
+          }}
+        ></Box>
+        <Box
+          style={{
+            width: `${scoreIfCorrect - currentScore}%`,
+            height: "30px",
+            backgroundColor: "#e0e0e0",
+          }}
         ></Box>
       </Box>
-    </>
+    </Box>
   );
 };
 
