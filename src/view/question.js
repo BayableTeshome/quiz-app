@@ -53,7 +53,7 @@ export const Question = (props) => {
             return (
               <Grid item xs={5}>
                 <Button
-                  disabled={false}
+                  disabled={nextButton}
                   variant="outlined"
                   color="inherit"
                   sx={{ backgroundColor: "#e0e0e0", width: "100%" }}
