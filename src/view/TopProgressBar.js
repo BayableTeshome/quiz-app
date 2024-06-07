@@ -11,8 +11,7 @@ const TopProgressBar = (props) => {
         backgroundColor: "#a0a0a0",
         width: `${currentQuestion}%`,
       }}
-    >
-    </Box>
+    ></Box>
   );
 };
 

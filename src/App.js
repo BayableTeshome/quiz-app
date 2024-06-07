@@ -1,36 +1,39 @@
-import React, { useContext } from "react";
+import React from "react";
 import TopProgressBar from "./view/TopProgressBar";
 import BottomProgressBar from "./view/BottomProgressBar";
+
+import questions from "./data-access/questions.json";
 import { Question } from "./view";
 import { Container, Stack } from "@mui/material";
-import { QuestionContext } from "./controller/questionContext";
-
 const App = () => {
-  const { currentQuestion, correctAnswers, isCorrect, changeQuestion } =
-    useContext(QuestionContext);
-  const questionProgress =
-    (currentQuestion.questionIndex / currentQuestion.totalQuestions) * 100;
-  const currentScore = correctAnswers / currentQuestion.questionIndex;
-  const scoreIfWrong = correctAnswers / currentQuestion.totalQuestions;
-  const remainingQuestions =
-    currentQuestion.totalQuestions - currentQuestion.questionIndex;
-  const scoreIfCorrect =
-    (correctAnswers + remainingQuestions) / currentQuestion.totalQuestions;
+  //==Should be implemented in context and provider===
+
+  const fetchedQuestion = questions[1];
+  const question = {
+    ...fetchedQuestion,
+    currentQuestion: 1,
+    totalQuestions: fetchedQuestion.length,
+    choices: [
+      ...fetchedQuestion.incorrect_answers,
+      fetchedQuestion.correct_answer,
+    ],
+  };
+  //==================================================
 
   return (
     <>
-      <TopProgressBar currentQuestion={questionProgress} />
+      <TopProgressBar currentQuestion={25} />
       <Container maxWidth={"md"}>
         <Stack
           direction="column"
           justifyContent="space-between"
           minHeight={"95vh"}
         >
-          <Question question={currentQuestion} />
+          <Question question={question} />
           <BottomProgressBar
-            currentScore={currentScore}
-            scoreIfWrong={scoreIfWrong}
-            scoreIfCorrect={scoreIfCorrect}
+            currentScore={50}
+            scoreIfWrong={30}
+            scoreIfCorrect={80}
           />
         </Stack>
       </Container>
