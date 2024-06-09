@@ -3,16 +3,16 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useState } from "react";
 
-export const Question = (props) => {
-  const {
-    category,
-    type,
-    difficulty,
-    question,
-    currentQuestion,
-    totalQuestions,
-    choices,
-  } = props.question;
+import { useContext } from "react";
+
+import { QuestionContext } from "../controller/questionContext.js";
+
+
+export  const Question = () => {
+
+  const {currentQuestionDetail, handleCorrrectAnswersSoFar,handleNextQuestion} = useContext(QuestionContext);
+  const {category,type,difficulty,question,questionIndex,totalQuestions,choices} = currentQuestionDetail;
+  const {correctAnswersSoFar,answer} = handleCorrrectAnswersSoFar;
 
   const stars = Array(5).fill(0);
 
@@ -21,7 +21,7 @@ export const Question = (props) => {
   return (
     <Box>
       <Typography variant="h4" mt={"40px"} gutterBottom>
-        Question {currentQuestion} of {totalQuestions}
+        Question {questionIndex} of {totalQuestions}
       </Typography>
       <Typography color="#757575" gutterBottom>
         {decodeURIComponent(category)}
@@ -51,7 +51,7 @@ export const Question = (props) => {
         {type === "multiple" &&
           choices.map((choice, index) => {
             return (
-              <Grid item xs={5}>
+              <Grid item xs={5} key ={index}>
                 <Button
                   disabled={nextButton}
                   variant="outlined"
@@ -74,7 +74,7 @@ export const Question = (props) => {
             variant="outlined"
             color="inherit"
             sx={{ backgroundColor: "#e0e0e0" }}
-            onClick={() => setNextButton(false)}
+            onClick={() =>{setNextButton(false);handleNextQuestion()}}
           >
             Next Question
           </Button>

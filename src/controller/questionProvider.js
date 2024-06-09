@@ -1,56 +1,63 @@
 // import questions from "./data-access/questions.json";
 import { useEffect, useState } from "react";
 import { QuestionContext } from "./questionContext";
+import { Category } from "@mui/icons-material";
 
-export const QuestionProvider = (props) => {
-  const [questionList, setQuestionList] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState({});
+import questions from "../data-access/questions.json";
+
+export const QuestionProvider = ({children}) => {
+  const [questionList, setQuestionList] = useState(questions);
+  const [currentQuestionDetail, setCurrentQuestionDetail] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
-
-  useEffect(() => {
-    setQuestionList(fetch("./data-access/questions.json")); // to be converted to .json
-    setCurrentQuestion(
-      updateQuestionContent(questionList[currentQuestionIndex])
-    );
+  const [correctAnswersSoFar, setCorrectAnswersSoFar] = useState(0);
+//currentQuestionIndex
+  useEffect(() => {    
+setCurrentQuestionDetail(
+  updateCurrentQuestionDetail(currentQuestionIndex));
   }, []);
 
   useEffect(() => {
-    setCurrentQuestion(
-      updateQuestionContent(questionList[currentQuestionIndex])
-    );
+    if(questionList.length>0){
+      setCurrentQuestionDetail(
+        updateCurrentQuestionDetail(currentQuestionIndex)
+      );
+    }
   }, [currentQuestionIndex, questionList]);
 
-  const isCorrect = (id) => {
+  const handleCorrrectAnswersSoFar = (id) => {
     const answer =
-      currentQuestion.correct_answer === currentQuestion.choices[id]
+      currentQuestionDetail.correct_answer === currentQuestionDetail.choices[id]
         ? true
         : false;
     if (answer) {
-      setCorrectAnswers(correctAnswers + 1);
+      setCorrectAnswersSoFar((prev)=>prev + 1);
     }
-    return answer;
+    return {correctAnswersSoFar, answer};
   };
 
-  const changeQuestion = () => {
-    questionList.length > currentQuestionIndex &&
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-  };
+const handleNextQuestion = ()=>{
+  if (questionList.length > currentQuestionIndex) {
+    setCurrentQuestionIndex((prev) => prev + 1);
+  }
+}
+  // ???
+  
 
-  const updateQuestionContent = (question) => {
+  const updateCurrentQuestionDetail = (currentQuestionIndex) => {
+    console.log(currentQuestionIndex);
     const updatedQuestion = {
-      ...question,
+      ...questionList[currentQuestionIndex],
       questionIndex: currentQuestionIndex,
       totalQuestions: questionList.length,
-      choices: [...question.incorrect_answers, question.correct_answer],
+      choices: [...questionList[currentQuestionIndex].incorrect_answers, questionList[currentQuestionIndex].correct_answer], // Spread incorrect answers and add correct answer
     };
+
     return updatedQuestion;
   };
 
-  const { children } = props;
   return (
     <QuestionContext.Provider
-      value={{ currentQuestion, correctAnswers, isCorrect, changeQuestion }}
+      value={{ currentQuestionDetail, handleCorrrectAnswersSoFar,handleNextQuestion }}
     >
       {children}
     </QuestionContext.Provider>
