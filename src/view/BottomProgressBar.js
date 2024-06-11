@@ -1,16 +1,27 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { Stack } from "@mui/material";
+import { Box } from "@mui/material";
 
-const BottomProgressBar = (props) => {
-  const { currentScore, scoreIfWrong, scoreIfCorrect } = props;
+import { useContext } from "react";
+import { QuestionContext } from "../controller/questionContext";
+
+const BottomProgressBar = () => {
+  const { currentQuestionDetail, handleCorrrectAnswersSoFar } =
+    useContext(QuestionContext);
+  const { questionIndex, totalQuestions } = currentQuestionDetail;
+  const { correctAnswersSoFar } = handleCorrrectAnswersSoFar;
+
+  const remainingQuestions = totalQuestions - questionIndex;
+
+  const currentScore = correctAnswersSoFar / questionIndex; // deno =???
+  const worestScore = correctAnswersSoFar / totalQuestions;
+  const bestScore = (correctAnswersSoFar + remainingQuestions) / totalQuestions;
 
   return (
     <Box>
-      <Stack direction="row" justifyContent="space-between">
+      {/* <Stack direction="row" justifyContent="space-between">
         <Typography>{`Score: ${currentScore}%`} </Typography>
-        <Typography>{`Max Score: ${scoreIfCorrect}%`}</Typography>
-      </Stack>
+        <Typography>{`Max Score: ${worestScore}%`}</Typography>
+      </Stack> */}
       <Box
         style={{
           width: "100%",
@@ -24,21 +35,21 @@ const BottomProgressBar = (props) => {
       >
         <Box
           style={{
-            width: `${scoreIfWrong}%`,
+            width: `${worestScore}%`,
             height: "30px",
             backgroundColor: "#212121",
           }}
         ></Box>
         <Box
           style={{
-            width: `${currentScore - scoreIfWrong}%`,
+            width: `${currentScore - worestScore}%`,
             height: "30px",
             backgroundColor: "#757575",
           }}
         ></Box>
         <Box
           style={{
-            width: `${scoreIfCorrect - currentScore}%`,
+            width: `${bestScore - currentScore}%`,
             height: "30px",
             backgroundColor: "#e0e0e0",
           }}
