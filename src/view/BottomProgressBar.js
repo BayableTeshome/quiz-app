@@ -1,22 +1,20 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { Stack } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { useContext } from "react";
 import { QuestionContext } from "../controller/questionContext";
 
 const BottomProgressBar = () => {
+  const { currentQuestionDetail, handleCorrrectAnswersSoFar } =
+    useContext(QuestionContext);
+  const { questionIndex, totalQuestions } = currentQuestionDetail;
+  const { correctAnswersSoFar } = handleCorrrectAnswersSoFar;
 
-  const {currentQuestionDetail, handleCorrrectAnswersSoFar} = useContext(QuestionContext);
-  const {questionIndex,totalQuestions} = currentQuestionDetail;
-  const {correctAnswersSoFar} = handleCorrrectAnswersSoFar;
+  const remainingQuestions = totalQuestions - questionIndex;
 
-const remainingQuestions = totalQuestions-questionIndex;
-
-const currentScore = correctAnswersSoFar/questionIndex; // deno =???
-const worestScore = (correctAnswersSoFar/totalQuestions);
-const bestScore = (correctAnswersSoFar+remainingQuestions)/totalQuestions;
-
+  const currentScore = correctAnswersSoFar / questionIndex; // deno =???
+  const worestScore = correctAnswersSoFar / totalQuestions;
+  const bestScore = (correctAnswersSoFar + remainingQuestions) / totalQuestions;
 
   return (
     <Box>

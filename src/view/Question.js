@@ -7,12 +7,23 @@ import { useContext } from "react";
 
 import { QuestionContext } from "../controller/questionContext.js";
 
-
-export  const Question = () => {
-
-  const {currentQuestionDetail, handleCorrrectAnswersSoFar,handleNextQuestion} = useContext(QuestionContext);
-  const {category,type,difficulty,question,questionIndex,totalQuestions,choices} = currentQuestionDetail;
-  const {correctAnswersSoFar,answer} = handleCorrrectAnswersSoFar;
+export const Question = () => {
+  const {
+    currentQuestionDetail,
+    handleCorrrectAnswersSoFar,
+    handleNextQuestion,
+  } = useContext(QuestionContext);
+  const {
+    category,
+    type,
+    difficulty,
+    question,
+    questionIndex,
+    totalQuestions,
+    choices,
+  } = currentQuestionDetail;
+  // eslint-disable-next-line no-unused-vars
+  const { correctAnswersSoFar, answer } = handleCorrrectAnswersSoFar;
 
   const stars = Array(5).fill(0);
 
@@ -51,7 +62,7 @@ export  const Question = () => {
         {type === "multiple" &&
           choices.map((choice, index) => {
             return (
-              <Grid item xs={5} key ={index}>
+              <Grid item xs={5} key={index}>
                 <Button
                   disabled={nextButton}
                   variant="outlined"
@@ -74,7 +85,10 @@ export  const Question = () => {
             variant="outlined"
             color="inherit"
             sx={{ backgroundColor: "#e0e0e0" }}
-            onClick={() =>{setNextButton(false);handleNextQuestion()}}
+            onClick={() => {
+              setNextButton(false);
+              handleNextQuestion();
+            }}
           >
             Next Question
           </Button>
