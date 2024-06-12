@@ -5,11 +5,9 @@ import BottomProgressBar from "./view/BottomProgressBar";
 import { Question } from "./view/Question.js";
 import { Container, Stack } from "@mui/material";
 
-
 import { QuestionProvider } from "./controller/questionProvider.js";
 
 const App = () => {
-
   return (
     <>
       <QuestionProvider>
@@ -20,8 +18,7 @@ const App = () => {
             justifyContent="space-between"
             minHeight={"95vh"}
           >
-            <Question  />
-            
+            <Question />
             <BottomProgressBar />
           </Stack>
         </Container>

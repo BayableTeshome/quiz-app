@@ -5,10 +5,10 @@ import { useContext } from "react";
 import { QuestionContext } from "../controller/questionContext";
 
 const BottomProgressBar = () => {
-  const { currentQuestionDetail, handleCorrrectAnswersSoFar } =
+  const { currentQuestionDetail, handleCorrectAnswersSoFar } =
     useContext(QuestionContext);
   const { questionIndex, totalQuestions } = currentQuestionDetail;
-  const { correctAnswersSoFar } = handleCorrrectAnswersSoFar;
+  const { correctAnswersSoFar } = handleCorrectAnswersSoFar;
 
   const remainingQuestions = totalQuestions - questionIndex;
 
