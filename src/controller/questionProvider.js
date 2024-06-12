@@ -10,12 +10,8 @@ export const QuestionProvider = ({ children }) => {
   const [currentQuestionDetail, setCurrentQuestionDetail] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswersSoFar, setCorrectAnswersSoFar] = useState(0);
-  //currentQuestionIndex
-  useEffect(() => {
-    setCurrentQuestionDetail(updateCurrentQuestionDetail(currentQuestionIndex));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
+  //currentQuestionDetail
   useEffect(() => {
     if (questionList.length > 0) {
       setCurrentQuestionDetail(
@@ -23,17 +19,18 @@ export const QuestionProvider = ({ children }) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentQuestionIndex, questionList]);
+  }, [currentQuestionIndex, questionList, correctAnswersSoFar]);
 
-  const handleCorrrectAnswersSoFar = (id) => {
-    const answer =
+  const handleCorrectAnswersSoFar = (id) => {
+    const currentAnswer =
       currentQuestionDetail.correct_answer === currentQuestionDetail.choices[id]
         ? true
         : false;
-    if (answer) {
+    if (currentAnswer) {
       setCorrectAnswersSoFar((prev) => prev + 1);
     }
-    return { correctAnswersSoFar, answer };
+
+    return currentAnswer;
   };
 
   const handleNextQuestion = () => {
@@ -41,18 +38,17 @@ export const QuestionProvider = ({ children }) => {
       setCurrentQuestionIndex((prev) => prev + 1);
     }
   };
-  // ???
 
   const updateCurrentQuestionDetail = (currentQuestionIndex) => {
-    console.log(currentQuestionIndex);
     const updatedQuestion = {
       ...questionList[currentQuestionIndex],
       questionIndex: currentQuestionIndex,
       totalQuestions: questionList.length,
+      correctAnswersSoFar,
       choices: [
         ...questionList[currentQuestionIndex].incorrect_answers,
         questionList[currentQuestionIndex].correct_answer,
-      ], // Spread incorrect answers and add correct answer
+      ],
     };
 
     return updatedQuestion;
@@ -62,7 +58,7 @@ export const QuestionProvider = ({ children }) => {
     <QuestionContext.Provider
       value={{
         currentQuestionDetail,
-        handleCorrrectAnswersSoFar,
+        handleCorrectAnswersSoFar,
         handleNextQuestion,
       }}
     >
