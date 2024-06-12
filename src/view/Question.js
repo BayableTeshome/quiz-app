@@ -89,7 +89,7 @@ export const Question = () => {
       {nextButton && (
         <Stack alignItems={"center"}>
           <Typography variant="h4" mt={"40px"} mb={"30px"}>
-            {currentAnswer ? "Correct!" : "Wrong!"}
+            {currentAnswer ? "Correct!" : "Sorry!"}
           </Typography>
           {questionIndex + 1 === totalQuestions ? (
             <Typography variant="h4" mt={"40px"} mb={"30px"}>
