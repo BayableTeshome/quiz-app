@@ -5,12 +5,11 @@ import { useContext } from "react";
 import { QuestionContext } from "../controller/questionContext";
 
 const TopProgressBar = () => {
+  const { currentQuestionDetail } = useContext(QuestionContext);
 
-  
-  const {currentQuestionDetail} = useContext(QuestionContext);
-  const {questionIndex,totalQuestion} = currentQuestionDetail;
-
-  const questionsAnsweredSofar = (questionIndex/totalQuestion); 
+  const questionsAnsweredSofar =
+    ((currentQuestionDetail.questionIndex + 1) * 100) /
+    currentQuestionDetail.totalQuestions;
 
   return (
     <Box
