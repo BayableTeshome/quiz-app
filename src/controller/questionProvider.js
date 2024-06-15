@@ -57,6 +57,9 @@ export const QuestionProvider = ({ children }) => {
   return (
     <QuestionContext.Provider
       value={{
+        questionList,
+        currentQuestionIndex,
+        correctAnswersSoFar,
         currentQuestionDetail,
         handleCorrectAnswersSoFar,
         handleNextQuestion,

@@ -1,27 +1,27 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { useContext } from "react";
 import { QuestionContext } from "../controller/questionContext";
 
 const BottomProgressBar = () => {
-  const { currentQuestionDetail, handleCorrectAnswersSoFar } =
-    useContext(QuestionContext);
-  const { questionIndex, totalQuestions } = currentQuestionDetail;
-  const { correctAnswersSoFar } = handleCorrectAnswersSoFar;
+  const {questionList} = useContext(QuestionContext);
+  const {currentQuestionIndex} = useContext(QuestionContext);
+  const {correctAnswersSoFar} = useContext(QuestionContext);
 
-  const remainingQuestions = totalQuestions - questionIndex;
+  const remainingQuestions = questionList.length - (currentQuestionIndex+1);
 
-  const currentScore = correctAnswersSoFar / questionIndex; // deno =???
-  const worestScore = correctAnswersSoFar / totalQuestions;
-  const bestScore = (correctAnswersSoFar + remainingQuestions) / totalQuestions;
+  const currentScore = 100*(correctAnswersSoFar / (currentQuestionIndex+1)); // deno =???
+  const worestScore = 100*(correctAnswersSoFar / questionList.length);
+  const bestScore = 100*((correctAnswersSoFar + remainingQuestions) / questionList.length);
 
   return (
-    <Box>
-      {/* <Stack direction="row" justifyContent="space-between">
-        <Typography>{`Score: ${currentScore}%`} </Typography>
-        <Typography>{`Max Score: ${worestScore}%`}</Typography>
-      </Stack> */}
+    <Box sx={{ width: '100%', mt: 2 }}>
+       <Box display="flex" justifyContent="space-between" mb={1}>
+        <Typography>{`Score: ${currentScore.toFixed(2)}%`}</Typography>
+        <Typography>{`Max Score: ${bestScore.toFixed(2)}%`}</Typography>
+      </Box>
+     
       <Box
         style={{
           width: "100%",
