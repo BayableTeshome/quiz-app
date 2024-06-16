@@ -10,6 +10,9 @@ export const QuestionProvider = ({ children }) => {
   const [currentQuestionDetail, setCurrentQuestionDetail] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswersSoFar, setCorrectAnswersSoFar] = useState(0);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [worestScore,setWorestScore] = useState(0);
+  const [bestScore,setBestScore] = useState(100);
 
   //currentQuestionDetail
   useEffect(() => {
@@ -29,6 +32,7 @@ export const QuestionProvider = ({ children }) => {
     if (currentAnswer) {
       setCorrectAnswersSoFar((prev) => prev + 1);
     }
+    updateBottomProgressBar();
 
     return currentAnswer;
   };
@@ -37,6 +41,9 @@ export const QuestionProvider = ({ children }) => {
     if (questionList.length > currentQuestionIndex) {
       setCurrentQuestionIndex((prev) => prev + 1);
     }
+    // console.log(currentScore);
+    // console.log(worestScore);
+    // console.log(bestScore);
   };
 
   const updateCurrentQuestionDetail = (currentQuestionIndex) => {
@@ -54,12 +61,25 @@ export const QuestionProvider = ({ children }) => {
     return updatedQuestion;
   };
 
+  const updateBottomProgressBar = ()=>{
+
+  const remainingQuestions = questionList.length - (currentQuestionIndex);
+   setCurrentScore( 100*(correctAnswersSoFar / (currentQuestionIndex+1))); 
+  setWorestScore(100*(correctAnswersSoFar / questionList.length));
+  setBestScore(100*((correctAnswersSoFar + remainingQuestions) / questionList.length));
+
+  console.log(correctAnswersSoFar);
+  console.log(currentQuestionIndex);
+  console.log(remainingQuestions);
+  }
+
   return (
     <QuestionContext.Provider
       value={{
-        questionList,
-        currentQuestionIndex,
-        correctAnswersSoFar,
+   currentScore ,
+   worestScore ,
+   bestScore ,
+
         currentQuestionDetail,
         handleCorrectAnswersSoFar,
         handleNextQuestion,

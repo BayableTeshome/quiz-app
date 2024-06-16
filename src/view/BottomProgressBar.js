@@ -5,15 +5,7 @@ import { useContext } from "react";
 import { QuestionContext } from "../controller/questionContext";
 
 const BottomProgressBar = () => {
-  const {questionList} = useContext(QuestionContext);
-  const {currentQuestionIndex} = useContext(QuestionContext);
-  const {correctAnswersSoFar} = useContext(QuestionContext);
-
-  const remainingQuestions = questionList.length - (currentQuestionIndex+1);
-
-  const currentScore = 100*(correctAnswersSoFar / (currentQuestionIndex+1)); // deno =???
-  const worestScore = 100*(correctAnswersSoFar / questionList.length);
-  const bestScore = 100*((correctAnswersSoFar + remainingQuestions) / questionList.length);
+  const {currentScore ,   worestScore ,  bestScore } = useContext(QuestionContext);
 
   return (
     <Box sx={{ width: '100%', mt: 2 }}>
