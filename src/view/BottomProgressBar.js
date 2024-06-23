@@ -10,8 +10,8 @@ const BottomProgressBar = () => {
   return (
     <Box sx={{ width: '100%', mt: 2 }}>
        <Box display="flex" justifyContent="space-between" mb={1}>
-        <Typography>{`Score: ${currentScore.toFixed(2)}%`}</Typography>
-        <Typography>{`Max Score: ${bestScore.toFixed(2)}%`}</Typography>
+        <Typography>{`Score: ${currentScore.toFixed(0)}%`}</Typography>
+        <Typography>{`Max Score: ${bestScore.toFixed(0)}%`}</Typography>
       </Box>
      
       <Box

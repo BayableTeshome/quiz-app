@@ -13,6 +13,7 @@ export const QuestionProvider = ({ children }) => {
   const [currentScore, setCurrentScore] = useState(0);
   const [worestScore,setWorestScore] = useState(0);
   const [bestScore,setBestScore] = useState(100);
+  const [remaingQestions, setRemainingQuestions] =useState(20);
 
   //currentQuestionDetail
   useEffect(() => {
@@ -24,29 +25,34 @@ export const QuestionProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestionIndex, questionList, correctAnswersSoFar]);
 
+  useEffect(() => {
+    updateBottomProgressBar();
+  }, [correctAnswersSoFar, currentQuestionIndex, questionList]);
+
   const handleCorrectAnswersSoFar = (id) => {
     const currentAnswer =
-      currentQuestionDetail.correct_answer === currentQuestionDetail.choices[id]
-        ? true
-        : false;
+      currentQuestionDetail.correct_answer === currentQuestionDetail.choices[id]?true:false;
     if (currentAnswer) {
       setCorrectAnswersSoFar((prev) => prev + 1);
     }
-    updateBottomProgressBar();
+    // updateBottomProgressBar();
+    // console.log(currentScore);
+    // console.log(worestScore);
+    // console.log(bestScore);
 
     return currentAnswer;
   };
+
 
   const handleNextQuestion = () => {
     if (questionList.length > currentQuestionIndex) {
       setCurrentQuestionIndex((prev) => prev + 1);
     }
-    // console.log(currentScore);
-    // console.log(worestScore);
-    // console.log(bestScore);
+   
   };
 
   const updateCurrentQuestionDetail = (currentQuestionIndex) => {
+    
     const updatedQuestion = {
       ...questionList[currentQuestionIndex],
       questionIndex: currentQuestionIndex,
@@ -63,14 +69,14 @@ export const QuestionProvider = ({ children }) => {
 
   const updateBottomProgressBar = ()=>{
 
-  const remainingQuestions = questionList.length - (currentQuestionIndex);
-   setCurrentScore( 100*(correctAnswersSoFar / (currentQuestionIndex+1))); 
+  setRemainingQuestions(questionList.length - (currentQuestionIndex+1));
+  setCurrentScore( 100*(correctAnswersSoFar / (currentQuestionIndex+1))); 
   setWorestScore(100*(correctAnswersSoFar / questionList.length));
-  setBestScore(100*((correctAnswersSoFar + remainingQuestions) / questionList.length));
+  setBestScore(100*((correctAnswersSoFar + remaingQestions) / questionList.length));
 
-  console.log(correctAnswersSoFar);
   console.log(currentQuestionIndex);
-  console.log(remainingQuestions);
+  console.log(correctAnswersSoFar);
+  console.log(remaingQestions);
   }
 
   return (
