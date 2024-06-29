@@ -13,7 +13,7 @@ export const QuestionProvider = ({ children }) => {
   const [currentScore, setCurrentScore] = useState(0);
   const [worestScore,setWorestScore] = useState(0);
   const [bestScore,setBestScore] = useState(100);
-  const [remaingQestions, setRemainingQuestions] =useState(20);
+  const [remainingQuestions, setRemainingQuestions] =useState(20);
 
   //currentQuestionDetail
   useEffect(() => {
@@ -35,11 +35,7 @@ export const QuestionProvider = ({ children }) => {
     if (currentAnswer) {
       setCorrectAnswersSoFar((prev) => prev + 1);
     }
-    // updateBottomProgressBar();
-    // console.log(currentScore);
-    // console.log(worestScore);
-    // console.log(bestScore);
-
+  
     return currentAnswer;
   };
 
@@ -72,11 +68,11 @@ export const QuestionProvider = ({ children }) => {
   setRemainingQuestions(questionList.length - (currentQuestionIndex+1));
   setCurrentScore( 100*(correctAnswersSoFar / (currentQuestionIndex+1))); 
   setWorestScore(100*(correctAnswersSoFar / questionList.length));
-  setBestScore(100*((correctAnswersSoFar + remaingQestions) / questionList.length));
+  setBestScore(100*((correctAnswersSoFar + remainingQuestions) / questionList.length));
 
   console.log(currentQuestionIndex);
   console.log(correctAnswersSoFar);
-  console.log(remaingQestions);
+  console.log(remainingQuestions);
   }
 
   return (
