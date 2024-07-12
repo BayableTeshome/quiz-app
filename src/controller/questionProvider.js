@@ -10,6 +10,10 @@ export const QuestionProvider = ({ children }) => {
   const [currentQuestionDetail, setCurrentQuestionDetail] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswersSoFar, setCorrectAnswersSoFar] = useState(0);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [worestScore,setWorestScore] = useState(0);
+  const [bestScore,setBestScore] = useState(100);
+  const [remainingQuestions, setRemainingQuestions] =useState(20);
 
   //currentQuestionDetail
   useEffect(() => {
@@ -21,25 +25,31 @@ export const QuestionProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestionIndex, questionList, correctAnswersSoFar]);
 
+  useEffect(() => {
+    updateBottomProgressBar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [correctAnswersSoFar, currentQuestionIndex, questionList]);
+
   const handleCorrectAnswersSoFar = (id) => {
     const currentAnswer =
-      currentQuestionDetail.correct_answer === currentQuestionDetail.choices[id]
-        ? true
-        : false;
+      currentQuestionDetail.correct_answer === currentQuestionDetail.choices[id]?true:false;
     if (currentAnswer) {
       setCorrectAnswersSoFar((prev) => prev + 1);
     }
-
+  
     return currentAnswer;
   };
+
 
   const handleNextQuestion = () => {
     if (questionList.length > currentQuestionIndex) {
       setCurrentQuestionIndex((prev) => prev + 1);
     }
+   
   };
 
   const updateCurrentQuestionDetail = (currentQuestionIndex) => {
+    
     const updatedQuestion = {
       ...questionList[currentQuestionIndex],
       questionIndex: currentQuestionIndex,
@@ -54,9 +64,25 @@ export const QuestionProvider = ({ children }) => {
     return updatedQuestion;
   };
 
+  const updateBottomProgressBar = ()=>{
+
+  setRemainingQuestions(questionList.length - (currentQuestionIndex+1));
+  setCurrentScore( 100*(correctAnswersSoFar / (currentQuestionIndex+1))); 
+  setWorestScore(100*(correctAnswersSoFar / questionList.length));
+  setBestScore(100*((correctAnswersSoFar + remainingQuestions) / questionList.length));
+
+  console.log(currentQuestionIndex);
+  console.log(correctAnswersSoFar);
+  console.log(remainingQuestions);
+  }
+
   return (
     <QuestionContext.Provider
       value={{
+   currentScore ,
+   worestScore ,
+   bestScore ,
+
         currentQuestionDetail,
         handleCorrectAnswersSoFar,
         handleNextQuestion,
