@@ -27,6 +27,7 @@ export const QuestionProvider = ({ children }) => {
 
   useEffect(() => {
     updateBottomProgressBar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [correctAnswersSoFar, currentQuestionIndex, questionList]);
 
   const handleCorrectAnswersSoFar = (id) => {
